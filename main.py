@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from typing import Optional
+from pydantic import BaseModel
+import uvicorn
+
 
 app = FastAPI()
 
@@ -28,3 +31,19 @@ def show(id: int):  # if we don't use :int we will get string in the output
 def comments(id: int, limit: int = 10):
     # Fetch comments of blog with id = '{id}'
     return {'limit': limit}
+
+
+# Model
+class Blog(BaseModel):
+    title: str
+    body: str
+    published: Optional[bool]
+
+
+@app.post('/blog')
+def create(blog: Blog):
+    return {'data': f"Blog is created with title as: {blog.title}"}
+
+
+if __name__ == '__main__':
+    uvicorn.run(app, host='127.0.0.1', port=9000)
