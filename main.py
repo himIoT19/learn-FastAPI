@@ -1,12 +1,16 @@
 from fastapi import FastAPI
+from typing import Optional
 
 app = FastAPI()
 
 
 # This way we can create an API
-@app.get('/')
-def index():
-    return {'data': {'name': 'Himanshu'}}  # 'Hi Himanshu'
+@app.get('/blog')   # /blog?limit=100&published=true
+def index(limit: int = 10, published: bool = True, sort: Optional[str] = None):
+    if published:
+        return {'data': f'{limit} blogs from the db'}
+    else:
+        return {'data': f'{limit} blogs from the db'}
 
 
 @app.get('/blog/unpublished')
@@ -21,6 +25,6 @@ def show(id: int):  # if we don't use :int we will get string in the output
 
 
 @app.get('/blog/{id}/comments')
-def comments(id: int):
+def comments(id: int, limit: int = 10):
     # Fetch comments of blog with id = '{id}'
-    return {'data': {'comment1', 'comment2', 'comment3'}}
+    return {'limit': limit}
