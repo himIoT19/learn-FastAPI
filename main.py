@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import uvicorn
 
 
+# App name
 app = FastAPI()
 
 
