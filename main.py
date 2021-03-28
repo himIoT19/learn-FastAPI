@@ -8,7 +8,7 @@ import uvicorn
 app = FastAPI()
 
 
-# This way we can create an API
+# This way we can create an API>
 @app.get('/blog')   # /blog?limit=100&published=true
 def index(limit: int = 10, published: bool = True, sort: Optional[str] = None):
     if published:
