@@ -1,5 +1,6 @@
+from sqlalchemy import Column, Integer, String
+
 from .database import Base
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 
 
 class Blog(Base):

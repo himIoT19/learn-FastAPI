@@ -1,15 +1,15 @@
-from fastapi import FastAPI
 from typing import Optional
-from pydantic import BaseModel
-import uvicorn
 
+import uvicorn
+from fastapi import FastAPI
+from pydantic import BaseModel
 
 # App name
 app = FastAPI()
 
 
 # This way we can create an API>
-@app.get('/blog')   # /blog?limit=100&published=true
+@app.get('/blog')  # /blog?limit=100&published=true
 def index(limit: int = 10, published: bool = True, sort: Optional[str] = None):
     if published:
         return {'data': f'{limit} blogs from the db'}

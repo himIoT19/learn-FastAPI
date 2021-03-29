@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Depends, status, Response, HTTPException
+from sqlalchemy.orm import Session
+
 from . import schemas, models
 from .database import engine, SessionLocal
-from sqlalchemy.orm import Session
 
 models.Base.metadata.create_all(engine)
 
@@ -25,6 +26,13 @@ def create(request: schemas.Blog, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_blog)
     return new_blog
+
+
+@app.delete('/blog/{id}', status_code=status.HTTP_204_NO_CONTENT)
+def remove_blog(id: int, db: Session = Depends(get_db)):
+    db.query(models.Blog).filter(models.Blog.id == id).delete(synchronize_session=False)
+    db.commit()
+    return 'done'
 
 
 @app.get('/blog')
